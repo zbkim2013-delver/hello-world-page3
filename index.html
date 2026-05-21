@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub 测试网页</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18212f;
+      --muted: #5c6675;
+      --line: #d9dde5;
+      --paper: #f7f4ee;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --shadow: 0 18px 45px rgba(24, 33, 47, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      min-height: 100vh;
+    }
+
+    .shell {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0;
+      font-size: 18px;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    nav a, button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-decoration: none;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 28px;
+      align-items: center;
+      min-height: calc(100vh - 128px);
+      padding: 36px 0 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(40px, 7vw, 84px);
+      line-height: 0.95;
+      letter-spacing: 0;
+      max-width: 760px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+      max-width: 620px;
+      margin: 0 0 26px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .preview {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .preview-top {
+      display: flex;
+      gap: 8px;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background: #eef2f2;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--accent-2);
+    }
+
+    .dot:nth-child(2) { background: #64748b; }
+    .dot:nth-child(3) { background: var(--accent); }
+
+    .preview-body {
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .metric {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .metric strong { font-size: 28px; }
+    .metric span { color: var(--muted); }
+
+    .status {
+      min-height: 24px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    footer {
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 780px) {
+      header, main { display: block; }
+      nav { margin-top: 14px; }
+      .preview { margin-top: 30px; }
+      .hero h1 { font-size: 46px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand">GitHub Pages 测试</div>
+      <nav aria-label="页面导航">
+        <a href="#demo">Demo</a>
+        <a href="#status">状态</a>
+        <a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="demo">
+        <h1>一个可以直接上线测试的网页。</h1>
+        <p>这是为 GitHub Pages 准备的静态测试页面。上传到仓库后，可以用来检查访问、样式、移动端布局和简单交互是否正常。</p>
+        <div class="actions">
+          <button class="primary" id="testButton">运行测试</button>
+          <button id="timeButton">显示时间</button>
+        </div>
+      </section>
+
+      <aside class="preview" id="status" aria-label="测试状态面板">
+        <div class="preview-top" aria-hidden="true">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="preview-body">
+          <div class="metric">
+            <span>页面状态</span>
+            <strong id="pageState">OK</strong>
+          </div>
+          <div class="metric">
+            <span>交互检查</span>
+            <strong id="clickCount">0</strong>
+          </div>
+          <div class="status" id="message">等待测试</div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>Static site ready for GitHub Pages.</footer>
+  </div>
+
+  <script>
+    const testButton = document.querySelector('#testButton');
+    const timeButton = document.querySelector('#timeButton');
+    const clickCount = document.querySelector('#clickCount');
+    const message = document.querySelector('#message');
+    let count = 0;
+
+    testButton.addEventListener('click', () => {
+      count += 1;
+      clickCount.textContent = count;
+      message.textContent = '测试通过：按钮交互正常';
+    });
+
+    timeButton.addEventListener('click', () => {
+      message.textContent = new Date().toLocaleString('zh-CN');
+    });
+  </script>
+</body>
+</html>
